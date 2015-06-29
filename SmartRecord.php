@@ -235,11 +235,12 @@ if (!class_exists("SmartRecord")) {
 		/**
 		 * Find all by query.
 		 */
-		public static final function findAllByQuery($query, $params=array()) {
+		public static final function findAllByQuery($query /* ... */) {
 			$conf=self::getConf();
 			$class=get_called_class();
 			$fields=self::$classes[get_called_class()]["fields"];
 
+			$params=self::flattenArray(array_slice(func_get_args(),1));
 			$queryRows=self::query($query,$params);
 
 			foreach ($queryRows as $queryRow) {
@@ -257,7 +258,8 @@ if (!class_exists("SmartRecord")) {
 		/**
 		 * Find one by query.
 		 */
-		public static final function findOneByQuery($query, $params=array()) {
+		public static final function findOneByQuery($query /* ... */) {
+			$params=self::flattenArray(array_slice(func_get_args(),1));
 			$all=self::findAllByQuery($query,$params);
 
 			if (!sizeof($all))
@@ -279,9 +281,7 @@ if (!class_exists("SmartRecord")) {
 		public static final function findAllBy($field, $value) {
 			return self::findAllByQuery(
 				"SELECT * FROM :table WHERE $field=%s",
-				array(
-					$value
-				)
+				$value
 			);
 		}
 
@@ -324,15 +324,9 @@ if (!class_exists("SmartRecord")) {
 		 * The parameters are varadic!
 		 */
 		private static final function query($q /* ... */) {
-			$p=array();
+			$params=self::flattenArray(array_slice(func_get_args(),1));
 
-			foreach (array_slice(func_get_args(),1) as $param) {
-				if (is_array($param))
-					$p=array_merge($p,$param);
-
-				else
-					$p[]=$param;
-			}
+			//echo "q: ".$q." p: ".print_r($params, TRUE);
 
 			if (defined("ABSPATH")) {
 				global $wpdb;
@@ -341,8 +335,10 @@ if (!class_exists("SmartRecord")) {
 				$q=str_replace("%table",self::getFullTableName(),$q);
 				$q=str_replace("%t",self::getFullTableName(),$q);
 
-				if (sizeof($p)) {
-					$arg=array_merge(array($q),$p);
+				if (sizeof($params)) {
+					$arg=array_merge(array($q),$params);
+					//print_r($arg);
+
 					$q=call_user_func_array(array($wpdb,"prepare"),$arg);
 				}
 
@@ -350,11 +346,37 @@ if (!class_exists("SmartRecord")) {
 				if ($wpdb->last_error)
 					throw new Exception($wpdb->last_error);
 
+				if ($res===NULL)
+					throw new Exception("Unknown error");
+
 				return $res;
 			}
 
 			else
 				throw new Exception("Unknown environment");
+		}
+
+		/**
+		 * Flatten an array, or make a non array into an array.
+		 */
+		public static function flattenArray($a) {
+			if (is_array($a) && !$a)
+				return array();
+
+			if (!is_array($a))
+				$a=array($a);
+
+			$res=array();
+
+			foreach ($a as $item) {
+				if (is_array($item))
+					$res=array_merge($res,$item);
+
+				else
+					$res[]=$item;
+			}
+
+			return $res;
 		}
 
 		/**
