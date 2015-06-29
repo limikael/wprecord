@@ -243,6 +243,8 @@ if (!class_exists("SmartRecord")) {
 			$params=self::flattenArray(array_slice(func_get_args(),1));
 			$queryRows=self::query($query,$params);
 
+			$res=array();
+
 			foreach ($queryRows as $queryRow) {
 				$o=new $class;
 
