@@ -1,5 +1,7 @@
 <?php
 
+if (!class_exists("SmartRecord")) {
+
 	// Wordpress
 	if (defined("ABSPATH")) {
 		require_once(ABSPATH.'wp-admin/includes/upgrade.php');
@@ -369,3 +371,4 @@
 				throw new Exception("Unknown environment");
 		}
 	}
+} // if (!class_exists("SmartRecord"))
