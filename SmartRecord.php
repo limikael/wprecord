@@ -198,7 +198,11 @@ if (!class_exists("SmartRecord")) {
 					$s.="$field=%s";
 					$first=FALSE;
 
-					$params[]=$this->$field;
+					if (isset($this->$field))
+						$params[]=$this->$field;
+
+					else
+						$params[]=NULL;
 				}
 
 			if ($pk) {
