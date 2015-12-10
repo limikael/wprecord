@@ -284,17 +284,31 @@ if (!class_exists("SmartRecord")) {
 		/**
 		 * Find all by value.
 		 */
-		public static final function findAllBy($field, $value) {
-			return self::findAllByQuery(
-				"SELECT * FROM :table WHERE $field=%s",
-				$value
-			);
+		public static final function findAllBy($field, $value=NULL) {
+			if (is_array($field))
+				$args=$field;
+
+			else
+				$args=array($field=>$value);
+
+			$q="SELECT * FROM :table WHERE ";
+			$qa=[];
+			$params=[];
+
+			foreach ($args as $key=>$value) {
+				$qa[]=$key;
+				$params[]=$value;
+			}
+
+			$q.=join(" AND ",$qa);
+
+			return self::findAllByQuery($q,$params);
 		}
 
 		/**
 		 * Find one by value.
 		 */
-		public static final function findOneBy($field, $value) {
+		public static final function findOneBy($field, $value=NULL) {
 			$res=self::findAllBy($field,$value);
 
 			if (!sizeof($res))

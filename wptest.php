@@ -40,9 +40,15 @@ function activate_wpar_test() {
 	$a=RecordTest::findOneByQuery("SELECT * FROM %t WHERE otherint=%s AND sometext=%s",123,"hello");
 	error_log("found: ".$a->sometext);
 
+	$a=RecordTest::findOneBy(array(
+		"otherint"=>123,
+		"sometext"=>"hello"
+	));
+
 	$r->delete();
 
 	$a=RecordTest::findOne(124123432);
+	error_log("a: ".$a->sometext);
 }
 
 function deactivate_wpar_test() {
