@@ -296,7 +296,7 @@ if (!class_exists("SmartRecord")) {
 			$params=[];
 
 			foreach ($args as $key=>$value) {
-				$qa[]=$key;
+				$qa[]="$key=%s";
 				$params[]=$value;
 			}
 
