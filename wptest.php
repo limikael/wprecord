@@ -1,19 +1,20 @@
 <?php
 
 /*
-Plugin Name: Test SmartRecord in wordpress
-Plugin URI: http://github.com/limikael/smartrecord
+Plugin Name: WpRecord
+Description: Test WpRecord in Wordpress. Not actually a plugin but a library!
+Plugin URI: http://github.com/limikael/wprecord
 Version: 0.0.1
 */
 
 
 define("WP_DEBUG",TRUE);
 
-require_once __DIR__."/SmartRecord.php";
+require_once __DIR__."/WpRecord.php";
 
-//print_r(SmartRecord::flattenArray(array(array(1),2)));
+//print_r(WpRecord::flattenArray(array(array(1),2)));
 
-class RecordTest extends SmartRecord {
+class RecordTest extends WpRecord {
 	public static function initialize() {
 		self::field("id","integer not null auto_increment");
 		self::field("sometext","varchar(255) not null");
@@ -45,14 +46,18 @@ function activate_wpar_test() {
 		"sometext"=>"hello"
 	));
 
+	$a=RecordTest::findOne($id);
+	error_log("before: ".$a->sometext);
+
 	$r->delete();
 
-	$a=RecordTest::findOne(124123432);
-	error_log("a: ".$a->sometext);
+	//$a=RecordTest::findOne(124123432);
+	$a=RecordTest::findOne($id);
+	error_log("after: ".$a->sometext);
 }
 
 function deactivate_wpar_test() {
-	//RecordTest::uninstall();
+	RecordTest::uninstall();
 }
 
 register_activation_hook(__FILE__,"activate_wpar_test");

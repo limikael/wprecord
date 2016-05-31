@@ -1,6 +1,6 @@
 <?php
 
-if (!class_exists("SmartRecord")) {
+if (!class_exists("WpRecord")) {
 
 	// Wordpress
 	if (defined("ABSPATH")) {
@@ -8,7 +8,7 @@ if (!class_exists("SmartRecord")) {
 	}
 
 	/**
-	 * Smart active record implementation which adapts itself to the database
+	 * Simple active record implementation which adapts itself to the database
 	 * environment used. 
 	 * 
 	 * Currently only wordpress is supported, but it is easy to add other environments
@@ -19,7 +19,7 @@ if (!class_exists("SmartRecord")) {
 	 * a static method called initialize, which sets up the fields used by the class.
 	 *
 	 * <code>
-	 * class MyClass extends SmartRecord {
+	 * class MyClass extends WpRecord {
 	 *     static function initialize() {
 	 *         self::field("id", "integer not null auto_increment");
 	 *         self::field("sometext", "varchar(255) not null");
@@ -43,7 +43,7 @@ if (!class_exists("SmartRecord")) {
 	 * $mc->save();
 	 * </code>
 	 */
-	class SmartRecord {
+	class WpRecord {
 
 		private static $classes=array();
 
@@ -413,4 +413,4 @@ if (!class_exists("SmartRecord")) {
 				throw new Exception("Unknown environment");
 		}
 	}
-} // if (!class_exists("SmartRecord"))
+} // if (!class_exists("WpRecord"))
