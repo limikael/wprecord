@@ -9,8 +9,8 @@ if (!class_exists("WpRecord")) {
 
 	/**
 	 * Simple active record implementation which adapts itself to the database
-	 * environment used. 
-	 * 
+	 * environment used.
+	 *
 	 * Currently only wordpress is supported, but it is easy to add other environments
 	 * eventually. An environment in this context is a method to connect to a database,
 	 * such as PDO. PDO would be the next obvious method to add support for.
@@ -27,7 +27,7 @@ if (!class_exists("WpRecord")) {
 	 * }
 	 * </code>
 	 *
-	 * Now, we can call the install function, and have the schema syncronized to the 
+	 * Now, we can call the install function, and have the schema syncronized to the
 	 * underlying database. This only needs to be done whenever our schema changes,
 	 * so a good place to do it is in plugin activation or similar.
 	 *
@@ -157,11 +157,12 @@ if (!class_exists("WpRecord")) {
 		 */
 		private function getPrimaryKeyValue() {
 			$conf=self::$classes[get_called_class()];
+			$pk=$conf["primaryKey"];
 
-			if (!isset($this->$conf["primaryKey"]))
+			if (!isset($this->$pk))
 				return NULL;
 
-			return $this->$conf["primaryKey"];
+			return $this->$pk;
 		}
 
 		/**
