@@ -1,6 +1,6 @@
 {
-    "name": "limikael/smartrecord",
-    "description": "Smart active record implementation",
+    "name": "limikael/wprecord",
+    "description": "Active record implementation for WordPress",
     "authors": [
         {
             "name": "Mikael Lindqvist",

@@ -213,8 +213,10 @@ if (!class_exists("WpRecord")) {
 
 			$statement=self::query($s,$params);
 
-			if (!$this->getPrimaryKeyValue())
-				$this->$conf["primaryKey"]=self::lastInsertId();
+			if (!$this->getPrimaryKeyValue()) {
+				$primaryKeyField=$conf["primaryKey"];
+				$this->$primaryKeyField=self::lastInsertId();
+			}
 		}
 
 		/**
@@ -234,7 +236,8 @@ if (!class_exists("WpRecord")) {
 				)
 			);
 
-			unset($this->$conf["primaryKey"]);
+			$primaryKeyField=$conf["primaryKey"];
+			unset($this->$primaryKeyField);
 		}
 
 		/**
