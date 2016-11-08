@@ -60,3 +60,23 @@ so a good place to do it is in the [plugin activation hook](https://developer.wo
 Person::install();
 ```
 
+We can now create a `Person` object and save it to the database:
+
+```php
+$person=new Person();
+$person->firstName="Mikael";
+$person->lastName="Lindqvist";
+$person->save();
+```
+
+## Methods
+
+The following methods are implemented in the base class, and are available in all classes extending `WpRecord`. For illustration, we will assume that we are operating on the `Person` object explained above.
+
+### findOne
+
+```php
+Person::findOne($id)
+```
+
+Finds one object by primary key value
