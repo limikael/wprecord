@@ -1,6 +1,10 @@
 # WpRecord
-
 WpRecord is a simple implementation of the [active record pattern](https://en.wikipedia.org/wiki/Active_record_pattern), specifically created for a WordPress environment.
+
+* [What is active record?](#what-is-active-record)
+* [An example](#an-example)
+* [Using WpRecord](#using-wprecord)
+* [Methods](#methods)
 
 ## What is active record?
 
