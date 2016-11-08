@@ -118,3 +118,6 @@ $person=Person::findOneBy(array(
 
 Finds one object by matching against one or several fields.
 
+### findAllBy
+
+Works the same as `findOneBy` but returns an array of objects.
