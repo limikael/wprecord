@@ -71,12 +71,50 @@ $person->save();
 
 ## Methods
 
-The following methods are implemented in the base class, and are available in all classes extending `WpRecord`. For illustration, we will assume that we are operating on the `Person` object explained above.
+The following methods are implemented in the base class, and are available in all classes extending `WpRecord`. For illustration, we will assume that we are operating on the `Person` object explained above. The methods used to retreive information from the database are static, since they do not act on a specific object. The methods acting on a specific object (`save` and `delete`) are not-static.
 
-### findOne
+### save
 
 ```php
-Person::findOne($id)
+$person->save();
 ```
 
-Finds one object by primary key value
+Saves an object to the database. If the object has a value for the primary key field, it will be updated in the database. If not, a new row will be crated and the primary key value will be set in the object.
+
+### delete
+
+```php
+$person->delete();
+```
+
+Deletes an object form the database.
+
+### findOne
+```php
+$person=Person::findOne($id);
+```
+
+Finds one object by primary key value.
+
+### findAll
+```php
+$persons=Person::findAll();
+```
+
+Finds all the objects in the database table.
+
+### findOneBy
+```php
+$person=Person::findOneBy("firstName","Mikael");
+```
+
+or
+```php
+$person=Person::findOneBy(array(
+    "firstName"=>"Mikael",
+    "lastName"=>"Lindqvist"
+));
+```
+
+Finds one object by matching against one or several fields.
+
