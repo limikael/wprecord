@@ -40,7 +40,7 @@ SQL is a powerful language used to extract information from a database. However,
 
 ## Using WpRecord
 
-In order to use WpRecord, we create a class that extends the `WpRecord` class. In our class, we need to implement the static method `initialize`, which tells WpRecord the structure of the underlying database table. Remember, each class corresponds to a database table. From the `initialize` method, we make calls to the static method `field` to tell WpRecord which fields our database table has. Let's do this for the Person object used above:
+In order to use WpRecord, we create a class that extends the `WpRecord` class. In our class, we need to implement the static method `initialize`, which tells WpRecord the structure of the underlying database table. Remember, each class corresponds to a database table. From the `initialize` method, we make calls to the static method `field` to tell WpRecord which fields our database table should have. Let's do this for the Person object used above:
 
 ```php
 class Person extends WpRecord {
@@ -50,5 +50,13 @@ class Person extends WpRecord {
         self::field("lastName", "varchar(255) not null");        
     }
 }
+```
+
+This is really all we need!  Now, we can call the `install` function, and have the schema syncronized to the
+underlying database. This only needs to be done whenever our schema changes,
+so a good place to do it is in the [plugin activation hook](https://developer.wordpress.org/plugins/the-basics/activation-deactivation-hooks/).
+
+```php
+Person::install();
 ```
 
