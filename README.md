@@ -37,6 +37,6 @@ Using WpRecord, the code would be:
 $persons=Person::findAllBy("lastName","Lee");
 ```
 
-SQL is a powerful language used to extract information from a database. However, in a real world database application, many of the queries are quite simple. They are often of the type in the example, such as "find an object with a particular value for the primary key", or "find all objects with a specific value for a given column". In these situations, having the SQL statements in the middle doesn't really serve a real purpose, and it might make the code cluttered and difficult to read. Here, using an active record implementation will make the code smaller and cleaner.
+SQL is a powerful language used to extract information from a database. However, in a real world database application, many of the queries are quite simple. They are often of the type in the example, such as "find an object with a particular value for the primary key", or "find all objects with a specific value for a given column". In these situations, having SQL statements in the middle of the code might make the code cluttered and difficult to read. Here, using an active record implementation will make the code smaller and cleaner.
 
 
