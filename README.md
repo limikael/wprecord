@@ -1,5 +1,4 @@
-WpRecord
-========
+# WpRecord
 
 WpRecord is a simple implementation of the [active record pattern](https://en.wikipedia.org/wiki/Active_record_pattern), specifically created for a WordPress environment.
 
@@ -39,4 +38,17 @@ $persons=Person::findAllBy("lastName","Lee");
 
 SQL is a powerful language used to extract information from a database. However, in a real world database application, many of the queries are quite simple. They are often of the type in the example, such as "find an object with a particular value for the primary key", or "find all objects with a specific value for a given column". In these situations, having SQL statements in the middle of the code might make the code cluttered and difficult to read. Here, using an active record implementation will make the code smaller and cleaner.
 
+## Using WpRecord
+
+In order to use WpRecord, we create a class that extends the `WpRecord` class. In our class, we need to implement the static method `initialize`, which tells WpRecord the structure of the underlying database table. Remember, each class corresponds to a database table. From the `initialize` method, we make calls to the static method `field` to tell WpRecord which fields our database table has. Let's do this for the Person object used above:
+
+```php
+class Person extends WpRecord {
+    static function initialize() {
+        self::field("id", "integer not null auto_increment");
+        self::field("firstName", "varchar(255) not null");        
+        self::field("lastName", "varchar(255) not null");        
+    }
+}
+```
 
