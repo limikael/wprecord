@@ -53,7 +53,7 @@ if (!class_exists("WpRecord")) {
 		/**
 		 * Get full table name.
 		 */
-		protected static final function getFullTableName() {
+		public static final function getFullTableName() {
 			self::init();
 
 			return self::$classes[get_called_class()]["table"];
